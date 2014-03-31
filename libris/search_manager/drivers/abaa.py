@@ -4,19 +4,6 @@ from base_result import BaseResult
 from libris.settings.log_config import *
 logger = logging.getLogger("abaa-driver")
 
-# TODO: This works, but it's not encapsulated enough, would be better to process each block independently
-
-# class AbaaResult(BaseResult):
-#     def __init__(self):
-#         super(AbaaResult, self).__init__()
-#         self.__block__ = '//*[@id="search-result-block"]/div/div'
-#         self.title = '//*[@id="search-result-block"]/div/div/a[@class="srtitle"]/text()'
-#         self.author = '//*[@id="search-result-block"]/div/div/div[@class="srauthor"]/text()'
-#         self.description = '//*[@id="search-result-block"]/div/div/div[@class="desc"]/text()[normalize-space()]'
-#         self.price = '//*[@id="search-result-block"]/div/div[@class="span-3 last"]/div[@class="order-box"]/div[@class="price"]/text()[normalize-space()]'
-#         self.seller_link = '//*[@id="search-result-block"]/div/div/a[@class="srtitle"]/@href'
-#         self.image = '//*[@id="search-result-block"]/div/div/a/img[@class="photo"]/@src'
-
 
 class AbaaResult(BaseResult):
     def __init__(self):
@@ -125,12 +112,12 @@ class AbaaDriver(object):
             parsed_results = self.get_results(block)
             result_array.append(parsed_results)
 
-        # for i in range(2, pages+1):
-        #     body = self.search(page=str(i), **kwargs)
-        #     blocks = self.get_blocks(body)
-        #     for block in blocks:
-        #         parsed_results = self.get_results(block)
-        #         result_array.append(parsed_results)
+        for i in range(2, pages+1):
+            body = self.search(page=str(i), **kwargs)
+            blocks = self.get_blocks(body)
+            for block in blocks:
+                parsed_results = self.get_results(block)
+                result_array.append(parsed_results)
 
         logger.info("Total results: %d" % len(result_array))
         return result_array
@@ -139,5 +126,4 @@ a = AbaaDriver()
 res = a.do_search(author="Charles Dickens", title="The Pickwick Papers")
 
 for item in res[:5]:
-    print item
-    # print "%s [%s], Has Image: %s" % (item.get("title", "NO TITLE FOUND"), item.get("price", "not found"), item.get("image", "None"))
+    print "%s [%s], Has Image: %s" % (item.get("title", "NO TITLE FOUND"), item.get("price", "not found"), item.get("image", "None"))
