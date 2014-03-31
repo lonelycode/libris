@@ -1,32 +1,33 @@
 import requests
-import inspect
 from lxml import html
+from base_result import BaseResult
+from libris.settings.log_config import *
+logger = logging.getLogger("abaa-driver")
 
+# TODO: This works, but it's not encapsulated enough, would be better to process each block independently
 
-class BaseResult(object):
-    def __init__(self):
-        self.title = None
-        self.author = None
-        self.description = None
-        self.image = None
-        self.price = None
-        self.seller = None
-
-    def get_field_xpaths(self):
-        attributes = inspect.getmembers(self, lambda a:not(inspect.isroutine(a)))
-        these_attrs = [a for a in attributes if not(a[0].startswith('__') and a[0].endswith('__'))]
-
-        return these_attrs
+# class AbaaResult(BaseResult):
+#     def __init__(self):
+#         super(AbaaResult, self).__init__()
+#         self.__block__ = '//*[@id="search-result-block"]/div/div'
+#         self.title = '//*[@id="search-result-block"]/div/div/a[@class="srtitle"]/text()'
+#         self.author = '//*[@id="search-result-block"]/div/div/div[@class="srauthor"]/text()'
+#         self.description = '//*[@id="search-result-block"]/div/div/div[@class="desc"]/text()[normalize-space()]'
+#         self.price = '//*[@id="search-result-block"]/div/div[@class="span-3 last"]/div[@class="order-box"]/div[@class="price"]/text()[normalize-space()]'
+#         self.seller_link = '//*[@id="search-result-block"]/div/div/a[@class="srtitle"]/@href'
+#         self.image = '//*[@id="search-result-block"]/div/div/a/img[@class="photo"]/@src'
 
 
 class AbaaResult(BaseResult):
     def __init__(self):
         super(AbaaResult, self).__init__()
-        self.title = '//*[@id="search-result-block"]/div/div/a[@class="srtitle"]/text()'
-        self.author = '//*[@id="search-result-block"]/div/div/div[@class="srauthor"]/text()'
-        self.description = '//*[@id="search-result-block"]/div/div/div[@class="desc"]/text()'
-        self.price = '//*[@id="search-result-block"]/div/div/div/div[@class="price"]/text()'
-        self.seller = '//*[@id="search-result-block"]/div/div/div[@class="offered_by"]/a/text()'
+        self.__block__ = '//*[@id="search-result-block"]/div/div[@class="span-15"]'
+        self.title = './a[@class="srtitle"]/text()'
+        self.author = './div[@class="srauthor"]/text()'
+        self.description = './div[@class="desc"]/text()[normalize-space()]'
+        self.price = '../div[@class="span-3 last"]/div[@class="order-box"]/div[@class="price"]/text()[normalize-space()]'
+        self.seller_link = './a[@class="srtitle"]/@href'
+        self.image = './a/img[@class="photo"]/@src'
 
 
 class AbaaDriver(object):
@@ -67,7 +68,7 @@ class AbaaDriver(object):
     def get_results(self, body):
         results_object = {}
 
-        page_tree = self._get_tree(body)
+        page_tree = body
         if self.result_model:
             new_model = self.result_model()
             fields = new_model.get_field_xpaths()
@@ -75,20 +76,25 @@ class AbaaDriver(object):
                 path = field[1]
                 if path:
                     field_values = page_tree.xpath(path)
-                    results_object[field[0]] = field_values
+                    if field_values:
+                        results_object[field[0]] = self.clean_result(field_values[0])
 
         return results_object
 
-    def package_results(self, raw_results):
-        result_list = []
-        index = 0
+    def get_blocks(self, body):
+        page_tree = self._get_tree(body)
+        new_model = self.result_model()
+        base_path = new_model.__block__
+        blocks = page_tree.xpath(base_path)
+        print len(blocks)
 
-        results_dict = raw_results[0]
-        base_result_obj = {key: None for key, values in results_dict.iteritems()}
+        return blocks
 
-        for key in results_dict.keys():
-                
-
+    @staticmethod
+    def clean_result(result_text):
+        new_text = result_text.encode("utf-8")
+        new_text = new_text.replace("\n", "").strip()
+        return new_text
 
     def search(self, **kwargs):
         payload = {}
@@ -114,19 +120,24 @@ class AbaaDriver(object):
 
         first_page = self.search(**kwargs)
         pages = self.get_pages(first_page)
-        parsed_results = self.get_results(first_page)
-        result_array.append(parsed_results)
+        blocks = self.get_blocks(first_page)
+        for block in blocks:
+            parsed_results = self.get_results(block)
+            result_array.append(parsed_results)
 
         # for i in range(2, pages+1):
         #     body = self.search(page=str(i), **kwargs)
-        #     parsed_results = self.get_results(body)
-        #     if parsed_results:
+        #     blocks = self.get_blocks(body)
+        #     for block in blocks:
+        #         parsed_results = self.get_results(block)
         #         result_array.append(parsed_results)
 
+        logger.info("Total results: %d" % len(result_array))
         return result_array
 
 a = AbaaDriver()
 res = a.do_search(author="Charles Dickens", title="The Pickwick Papers")
 
-print "RESULTS!"
-print res
+for item in res[:5]:
+    print item
+    # print "%s [%s], Has Image: %s" % (item.get("title", "NO TITLE FOUND"), item.get("price", "not found"), item.get("image", "None"))

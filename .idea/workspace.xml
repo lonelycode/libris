@@ -27,17 +27,15 @@
         <entry file="file://$PROJECT_DIR$/libris/search_manager/search_manager.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="6" column="12" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="216">
-              <folding>
-                <marker date="1396263397704" expanded="true" signature="29:121" placeholder="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="abaa.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="abaa.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libris/search_manager/drivers/abaa.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="12" selection-start="2849" selection-end="2849" vertical-scroll-proportion="0.75482404" vertical-offset="937" max-vertical-offset="2466">
+            <state line="79" column="85" selection-start="3202" selection-end="3202" vertical-scroll-proportion="-23.74074" vertical-offset="781" max-vertical-offset="2664">
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -45,19 +43,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="search_manager_settings.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libris/settings/search_manager_settings.py">
+      <file leaf-file-name=".gitignore" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="14" selection-start="173" selection-end="182" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
+            <state line="1" column="6" selection-start="12" selection-end="12" vertical-scroll-proportion="0.017509727" vertical-offset="0" max-vertical-offset="1028">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="module_finder.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libris/helpers/module_finder.py">
+      <file leaf-file-name="base_result.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libris/search_manager/drivers/base_result.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="13" selection-start="689" selection-end="689" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+            <state line="10" column="26" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
               <folding />
             </state>
           </provider>
@@ -81,7 +79,9 @@
         <option value="$PROJECT_DIR$/libris/search_manager/searcher_config.py" />
         <option value="$PROJECT_DIR$/libris/settings/searcher_config.py" />
         <option value="$PROJECT_DIR$/libris/settings/search_manager_settings.py" />
+        <option value="$PROJECT_DIR$/libris/search_manager/drivers/base_result.py" />
         <option value="$PROJECT_DIR$/libris/search_manager/drivers/abaa.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -89,7 +89,7 @@
     <option name="x" value="-1" />
     <option name="y" value="-6" />
     <option name="width" value="1922" />
-    <option name="height" value="1088" />
+    <option name="height" value="1208" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -423,7 +423,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1" y="-6" width="1922" height="1088" extended-state="6" />
+    <frame x="-1" y="-6" width="1922" height="1208" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -475,35 +475,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libris/search_manager/search_manager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="12" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="216">
-          <folding>
-            <marker date="1396263397704" expanded="true" signature="29:121" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libris/helpers/module_finder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="13" selection-start="689" selection-end="689" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="540">
+        <state line="1" column="43" selection-start="0" selection-end="84" vertical-scroll-proportion="0.017509727" vertical-offset="0" max-vertical-offset="1028">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libris/settings/search_manager_settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="14" selection-start="173" selection-end="182" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
+        <state line="11" column="13" selection-start="219" selection-end="219" vertical-scroll-proportion="0.192607" vertical-offset="0" max-vertical-offset="1028">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libris/search_manager/search_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="12" selection-start="121" selection-end="121" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="216">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm30/system/python_stubs/348993582/lxml/etree.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1029" column="11" selection-start="37957" selection-end="37957" vertical-scroll-proportion="0.3507389" vertical-offset="18166" max-vertical-offset="107370">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libris/search_manager/drivers/base_result.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="26" selection-start="230" selection-end="230" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="414">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libris/search_manager/drivers/abaa.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="12" selection-start="2849" selection-end="2849" vertical-scroll-proportion="0.75482404" vertical-offset="937" max-vertical-offset="2466">
+        <state line="79" column="85" selection-start="3202" selection-end="3202" vertical-scroll-proportion="-23.74074" vertical-offset="781" max-vertical-offset="2664">
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1" column="6" selection-start="12" selection-end="12" vertical-scroll-proportion="0.017509727" vertical-offset="0" max-vertical-offset="1028">
+          <folding />
         </state>
       </provider>
     </entry>
