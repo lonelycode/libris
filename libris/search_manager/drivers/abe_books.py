@@ -46,15 +46,3 @@ class AbeBooksDriver(BaseDriver):
     def get_page_range(self, pages):
         maximum = pages * self.per_page
         return range(self.per_page, maximum, self.per_page)
-
-
-a = AbeBooksDriver()
-res = a.do_search(author="Charles Dickens", title="The Pickwick Papers")
-
-p_index = 0
-for item in res[:10]:
-    p_index += 1
-    img = False
-    if item.get("image", False):
-        img = True
-    print "[%d] [Price: %s] [Img: %s] [Title: %s]" % (p_index, item.get("price", "not found"), str(img), item.get("title", "NO TITLE FOUND"))

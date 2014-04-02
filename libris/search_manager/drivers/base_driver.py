@@ -14,6 +14,8 @@ class BaseDriver(object):
         self.method = "get"
         self.crawl_parameter_name = "page"
         self.page_xpath = ''
+        self.do_paging = True
+        self.inject_search_params = {}
 
     @staticmethod
     def _get_tree(body):
@@ -21,7 +23,11 @@ class BaseDriver(object):
         return tree
 
     def pre_process_pages(self, pages):
-        return pages
+        page_max = 5
+        if pages <= page_max:
+            return pages
+        else:
+            return page_max
 
     def get_pages(self, body):
         page_tree = self._get_tree(body)
@@ -30,6 +36,7 @@ class BaseDriver(object):
         if pages:
             return self.pre_process_pages(int(pages[-1]))
         else:
+            logging.info("No pages found")
             return 0
 
     def _get_model_fields(self):
@@ -112,11 +119,11 @@ class BaseDriver(object):
     @staticmethod
     def clean_result(result_text):
         new_text = result_text.encode("utf-8")
-        new_text = new_text.replace("\n", "").strip()
+        new_text = new_text.replace("\n", "").replace("\t", "").strip()
         return new_text
 
     def search(self, **kwargs):
-        payload = {}
+        payload = self.inject_search_params
         for key, value in kwargs.iteritems():
             this_key = self.field_map.get(key, key)
             payload[this_key] = value
@@ -153,16 +160,17 @@ class BaseDriver(object):
     def do_search(self, **kwargs):
 
         first_page = self.search(**kwargs)
-        pages = self.get_pages(first_page)
-
         zipped_results = self._process_page(first_page)
 
-        for i in self.get_page_range(pages):
-            logger.info("Processing page: %d" % i)
-            kwargs[self.crawl_parameter_name] = str(i)
-            body = self.search(**kwargs)
-            next_page_results = self._process_page(body)
-            zipped_results.extend(next_page_results)
+        if self.do_paging:
+            pages = self.get_pages(first_page)
+            logger.info("Processing %d pages" % pages)
+            for i in self.get_page_range(pages):
+                logger.info("Processing page: %d" % i)
+                kwargs[self.crawl_parameter_name] = str(i)
+                body = self.search(**kwargs)
+                next_page_results = self._process_page(body)
+                zipped_results.extend(next_page_results)
 
         logger.info("Total results: %d" % len(zipped_results))
         return zipped_results
